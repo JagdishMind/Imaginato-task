@@ -1,4 +1,4 @@
-import { baseLayoutStyles } from '@src/components';
+import { baseLayoutStyles, headerStyles } from '@src/components';
 import { favouriteStyles } from '@src/screens/Favourite/Favourite.style';
 import { homeStyles } from '@src/screens/Home/Home.style';
 import { loginStyles } from '@src/screens/Login/Login.style';
@@ -12,6 +12,7 @@ export const defaultStyles = (theme: Palette) => {
   return {
     baseLayoutStyle: baseLayoutStyles(theme),
     favouriteStyles: favouriteStyles(theme),
+    headerStyles: headerStyles(theme),
     homeStyles: homeStyles(theme),
     indicatorStyle: indicatorStyles(theme),
     loginStyle: loginStyles(theme),

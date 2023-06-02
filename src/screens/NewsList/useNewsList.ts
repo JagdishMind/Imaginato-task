@@ -24,7 +24,7 @@ const useNewsList = () => {
 
   const getNewsData = useCallback(async () => {
     loader.current?.show();
-    const getNews = await services.getNews({ page: 1 });
+    const getNews = await services.getUserList({ page: 1 });
     dispatch(setNews(getNews));
     loader.current?.hide();
   }, [dispatch, loader, services]);

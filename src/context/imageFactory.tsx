@@ -7,7 +7,5 @@ import { Images } from '@src/assets';
 export type ImageSource = Images | string;
 
 export const getAppImagesSource = (image: ImageSource, props?: ImageProps) => {
-  return (
-    <Image source={image} {...props} defaultSource={Images.PLACEHOLDER_IMAGE} />
-  );
+  return <Image source={image} {...props} defaultSource={Images.USER} />;
 };
