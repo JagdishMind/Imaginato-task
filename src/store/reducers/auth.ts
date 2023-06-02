@@ -19,7 +19,7 @@ const userCred = {
 
 export const authSlice = createSlice({
   initialState,
-  name: 'auth',
+  name: 'authData',
   reducers: {
     validateCredentials: (state, { payload }: PayloadAction<loginData>) => {
       state.isLoggedIn =
