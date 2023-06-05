@@ -1,89 +1,45 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-
-import { Text } from '@app/blueprints';
+import { FlatList, View } from 'react-native';
 
 import { Icons } from '@src/assets';
 import { BaseLayout, Header } from '@src/components';
 import type { UserList } from '@src/services';
 
 import useHome from './useHome';
+import { UserView } from './views';
 
 const HomeScreen = () => {
   const {
     styles,
     data,
     getIcons,
-    getImages,
     onLogoutPress,
-    handlePagination,
-    shouldLoadMore,
-    isPaginating,
+    onNextPage,
+    onPullToRefresh,
+    isRefreshing,
     onFavouritePress,
     isFavourite,
     onUnFavouritePress,
+    contents,
   } = useHome();
+
+  const renderItemSeparator = () => <View style={styles.itemSeparator} />;
 
   const renderItem = ({ item }: { item: UserList }) => {
     return (
-      <View key={item.id} style={styles.itemContainer}>
-        {getImages(item.profileUrlLarge, {
-          resizeMode: 'cover',
-          style: styles.image,
-        })}
-
-        <View style={styles.userDetailContainer}>
-          <Text
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={styles.name}
-            preset={'h4'}>
-            {`${item.name}`}
-          </Text>
-
-          <Text
-            preset={'h4'}
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={styles.email}>
-            {item.email}
-          </Text>
-        </View>
-
-        {isFavourite(item.id) ? (
-          <TouchableOpacity
-            style={styles.favIconContainer}
-            onPress={() => onUnFavouritePress(item)}>
-            {getIcons(Icons.FAV_ICON, {
-              resizeMode: 'contain',
-              style: styles.favIcon,
-            })}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.favIconContainer}
-            onPress={() => onFavouritePress(item)}>
-            {getIcons(Icons.FAV_OUTLINE_ICON, {
-              resizeMode: 'contain',
-              style: styles.favIcon,
-            })}
-          </TouchableOpacity>
-        )}
-      </View>
+      <UserView
+        item={item}
+        onUnFavouritePress={onUnFavouritePress}
+        onFavouritePress={onFavouritePress}
+        isFavourite={isFavourite(item.id)}
+      />
     );
   };
-
-  const renderItemSeparator = () => <View style={styles.itemSeparator} />;
 
   return (
     <BaseLayout>
       <Header
-        title="Users-List"
+        title={contents('home', 'title')}
         rightComponent={getIcons(Icons.LOGOUT_ICON, {
           resizeMode: 'contain',
           style: styles.logout,
@@ -91,19 +47,18 @@ const HomeScreen = () => {
         onRightComponentPress={onLogoutPress}
       />
       <FlatList
-        bounces={false}
         showsVerticalScrollIndicator={false}
         data={data}
         ItemSeparatorComponent={renderItemSeparator}
         contentContainerStyle={styles.contentContainer}
         style={styles.flatListStyles}
-        keyExtractor={(item, index) => `${item.id}-${index}`}
+        keyExtractor={(item, index) => item.email + `-` + index}
         renderItem={renderItem}
-        onEndReached={shouldLoadMore ? handlePagination : null}
+        automaticallyAdjustContentInsets={false}
+        onEndReached={onNextPage}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={() => {
-          return <>{isPaginating ? <ActivityIndicator /> : null}</>;
-        }}
+        onRefresh={onPullToRefresh}
+        refreshing={isRefreshing}
       />
     </BaseLayout>
   );

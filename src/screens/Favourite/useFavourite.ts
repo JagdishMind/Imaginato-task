@@ -12,7 +12,7 @@ import {
 } from '@src/store';
 
 const useFavourite = () => {
-  const { navigation, styles, loader, ...props } = useAppContext();
+  const { navigation, styles, loader, contents, ...props } = useAppContext();
   const dispatch = useAppDispatch();
 
   const favouritesList: FavouritesList[] = useSelector(getFavouritesData);
@@ -28,15 +28,16 @@ const useFavourite = () => {
           dispatch(setFavouriteUser(newFavouritesList));
         }
       } catch (error) {
-        showToast('Something went wrong, Please try later', 'error');
+        showToast(contents('common', 'errorMessage'), 'error');
       } finally {
         loader.current?.hide();
       }
     },
-    [dispatch, favouritesList, loader]
+    [contents, dispatch, favouritesList, loader]
   );
 
   return {
+    contents,
     data: favouritesList,
     navigation,
     onUnFavouritePress,

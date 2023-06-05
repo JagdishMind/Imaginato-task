@@ -1,26 +1,7 @@
 {
   "common": {
-    "cancel": "Cancel",
-    "create": "Create",
-    "delete": "Delete",
-    "errorMessage": "Unknown error..!!!",
-    "hey": "Hey there,",
-    "ohhNo": "Ohh Noo!!!",
-    "or": "Or",
-    "ok": "OK",
-    "save": "Save",
-    "see_more": "See More",
-    "skip": "Skip",
-    "welcome": "Welcome",
-    "yes": "Yes",
+    "errorMessage": "Something went wrong, Please try later",
     "internetConnectionError": "Please check you internet connectivity."
-  },
-  "newsList": {
-    "breakingNews": "Breaking News",
-    "general": "general"
-  },
-  "newsDetail": {
-    "anonymous": "anonymous"
   },
   "login": {
     "loginAcc": "Login to your account",
@@ -39,6 +20,9 @@
   "bottomTab": {
     "home": "Home",
     "favourite": "Favourite"
+  },
+  "home": {
+    "title": "Home"
   },
   "favourites": {
     "noFavourites": "No Favourites added yet"

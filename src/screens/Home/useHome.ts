@@ -7,57 +7,72 @@ import { useAppContext } from '@src/context';
 import { FavouritesList, UserList } from '@src/services';
 import {
   getFavouritesData,
-  getUsersData,
   setFavouriteUser,
-  setUsers,
   useAppDispatch,
   validateCredentials,
 } from '@src/store';
 
+const INITIAL_PAGE = 0;
+
 const useHome = () => {
   const { styles, loader, getIcons, contents, getImages, services, ...props } =
     useAppContext();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const dispatch = useAppDispatch();
-  const [isPaginating, setIsPaginating] = useState<boolean>(false);
   const shouldLoadMore = useRef(true);
   const currentPage = useRef<number>(0);
-  const data: UserList[] = useSelector(getUsersData);
-  const favouritesList: UserList[] = useSelector(getFavouritesData);
+  const [data, setUsers] = useState<UserList[]>([]);
+  const myFavourites: UserList[] = useSelector(getFavouritesData);
 
-  const getUserList = useCallback(async () => {
-    if (shouldLoadMore.current) {
+  const getUsers = useCallback(
+    async (isPullToRefresh: boolean = false) => {
+      if (
+        !isPullToRefresh &&
+        loader.current?.isLoading &&
+        shouldLoadMore.current
+      )
+        return;
       loader.current?.show();
       currentPage.current += 1;
-
-      currentPage.current === 1
-        ? setIsPaginating(false)
-        : setIsPaginating(true);
-
       await services
         .getUserList({ page: currentPage.current })
         .then(res => {
           if (res) {
             if (res.length === 0) {
               shouldLoadMore.current = false;
-            }
-            if (data.length > 0) {
-              const concatUsers = [...data, ...res];
-              dispatch(setUsers(concatUsers));
             } else {
-              dispatch(setUsers(res));
+              shouldLoadMore.current = true;
+              setUsers(item => {
+                return [...item, ...res];
+              });
             }
           }
         })
         .catch(error => {
           showToast(error);
         })
-        .finally(() => loader.current?.hide());
-    }
-  }, [data, dispatch, loader, services]);
+        .finally(() => {
+          setIsRefreshing(false);
+          loader.current?.hide();
+        });
+    },
+    [loader, services]
+  );
 
-  const handlePagination = () => {
-    if (isPaginating) return;
-    getUserList();
+  const clearUsers = () => {
+    currentPage.current = INITIAL_PAGE;
+    shouldLoadMore.current = false;
+    setUsers([]);
+  };
+
+  const onPullToRefresh = () => {
+    setIsRefreshing(true);
+    clearUsers();
+    getUsers();
+  };
+
+  const onNextPage = () => {
+    getUsers();
   };
 
   const onLogoutPress = useCallback(() => {
@@ -74,19 +89,19 @@ const useHome = () => {
     (item: UserList) => {
       loader.current?.show();
       try {
-        if (favouritesList && favouritesList.length > 0) {
-          const newFavouritesList = favouritesList.filter(
+        if (myFavourites && myFavourites.length > 0) {
+          const newFavouritesList = myFavourites.filter(
             favItem => favItem.id !== item.id
           );
           dispatch(setFavouriteUser(newFavouritesList));
         }
       } catch (error) {
-        showToast('Something went wrong, Please try later', 'error');
+        showToast(contents('common', 'errorMessage'), 'error');
       } finally {
         loader.current?.hide();
       }
     },
-    [dispatch, favouritesList, loader]
+    [loader, myFavourites, dispatch, contents]
   );
 
   const onFavouritePress = useCallback(
@@ -94,8 +109,8 @@ const useHome = () => {
       loader.current?.show();
       let favouriteUsers: FavouritesList[] = [];
       try {
-        if (favouritesList && favouritesList.length > 0) {
-          favouriteUsers = [...favouritesList, item];
+        if (myFavourites && myFavourites.length > 0) {
+          favouriteUsers = [...myFavourites, item];
         } else {
           favouriteUsers = [item];
         }
@@ -105,36 +120,37 @@ const useHome = () => {
         loader.current?.hide();
       }
     },
-    [dispatch, favouritesList, loader]
+    [dispatch, myFavourites, loader]
   );
 
   const isFavourite = useCallback(
     (id: string): boolean => {
       return (
-        favouritesList &&
-        favouritesList.length > 0 &&
-        favouritesList.some(favItem => favItem.id === id)
+        myFavourites &&
+        myFavourites.length > 0 &&
+        myFavourites.some(favItem => favItem.id === id)
       );
     },
-    [favouritesList]
+    [myFavourites]
   );
 
   useEffect(() => {
-    getUserList();
-  }, [data.length, getUserList]);
+    getUsers();
+  }, [getUsers]);
 
   return {
     contents,
     data,
     getIcons,
     getImages,
-    handlePagination,
     isFavourite,
-    isPaginating,
+    isRefreshing,
     onFavouritePress,
     onLogoutPress,
+    onNextPage,
+    onPullToRefresh,
     onUnFavouritePress,
-    shouldLoadMore,
+    shouldLoadMore: shouldLoadMore.current,
     styles: styles.homeStyles,
     ...props,
   };

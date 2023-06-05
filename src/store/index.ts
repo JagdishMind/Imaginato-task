@@ -20,14 +20,11 @@ import {
   authentication,
   favouritesList,
   favouriteUsersData,
-  usersData,
-  usersList,
 } from './reducers';
 
 const rootReducer = combineReducers({
   authData,
   favouriteUsersData,
-  usersData,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -50,7 +47,7 @@ export const reduxStorage: Storage = {
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: [authentication, usersList, favouritesList],
+  whitelist: [authentication, favouritesList],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
