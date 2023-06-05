@@ -5,11 +5,7 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 
-import {
-  NetworkLoggerScreen,
-  NewsDetailScreen,
-  NewsListScreen,
-} from '@src/screens';
+import { NetworkLoggerScreen } from '@src/screens';
 
 import { NavStackParams, Screen } from './appNavigation.type';
 import { BottomTabNavigation } from './bottomTabNavigation';
@@ -33,11 +29,6 @@ export const MainStackNavigation = () => {
           gestureEnabled: false,
         }}
         component={BottomTabNavigation}
-      />
-      <MainStack.Screen name={Screen.NEWS_LIST} component={NewsListScreen} />
-      <MainStack.Screen
-        name={Screen.NEWS_DETAIL}
-        component={NewsDetailScreen}
       />
       {__DEV__ && (
         <MainStack.Screen
