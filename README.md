@@ -77,7 +77,7 @@ This Project has Login screen & Home screen. Home screen has 2 tabs which contai
 | React            | UI Framework             | v18     |
 | TypeScript       | Language                 | v4      |
 | React Navigation | Navigation               | v6      |
-| Redux Toolkit    | State Managememt toolkit | v1      |
+| Redux Toolkit    | State Management toolkit | v1      |
 | MMKV             | Local Storage            | v2      |
 
 ## Folder Structure
