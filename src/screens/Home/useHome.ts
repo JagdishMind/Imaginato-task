@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { showToast } from '@app/blueprints';
 import { useSelector } from 'react-redux';
 
 import { useAppContext } from '@src/context';
-import { UserList } from '@src/services';
+import { FavouritesList, UserList } from '@src/services';
 import {
+  getFavouritesData,
   getUsersData,
+  setFavouriteUser,
   setUsers,
   useAppDispatch,
   validateCredentials,
 } from '@src/store';
-
-import { showToast } from '../../../blueprints/Toast/Toast';
 
 const useHome = () => {
   const { styles, loader, getIcons, contents, getImages, services, ...props } =
@@ -21,6 +22,7 @@ const useHome = () => {
   const shouldLoadMore = useRef(true);
   const currentPage = useRef<number>(0);
   const data: UserList[] = useSelector(getUsersData);
+  const favouritesList: UserList[] = useSelector(getFavouritesData);
 
   const getUserList = useCallback(async () => {
     if (shouldLoadMore.current) {
@@ -68,6 +70,55 @@ const useHome = () => {
     );
   }, [dispatch]);
 
+  const onUnFavouritePress = useCallback(
+    (item: UserList) => {
+      loader.current?.show();
+      try {
+        if (favouritesList && favouritesList.length > 0) {
+          const newFavouritesList = favouritesList.filter(
+            favItem => favItem.id !== item.id
+          );
+          dispatch(setFavouriteUser(newFavouritesList));
+        }
+      } catch (error) {
+        showToast('Something went wrong, Please try later', 'error');
+      } finally {
+        loader.current?.hide();
+      }
+    },
+    [dispatch, favouritesList, loader]
+  );
+
+  const onFavouritePress = useCallback(
+    (item: UserList) => {
+      loader.current?.show();
+      let favouriteUsers: FavouritesList[] = [];
+      try {
+        if (favouritesList && favouritesList.length > 0) {
+          favouriteUsers = [...favouritesList, item];
+        } else {
+          favouriteUsers = [item];
+        }
+        dispatch(setFavouriteUser(favouriteUsers));
+      } catch (error) {
+      } finally {
+        loader.current?.hide();
+      }
+    },
+    [dispatch, favouritesList, loader]
+  );
+
+  const isFavourite = useCallback(
+    (id: string): boolean => {
+      return (
+        favouritesList &&
+        favouritesList.length > 0 &&
+        favouritesList.some(favItem => favItem.id === id)
+      );
+    },
+    [favouritesList]
+  );
+
   useEffect(() => {
     getUserList();
   }, [data.length, getUserList]);
@@ -78,8 +129,11 @@ const useHome = () => {
     getIcons,
     getImages,
     handlePagination,
+    isFavourite,
     isPaginating,
+    onFavouritePress,
     onLogoutPress,
+    onUnFavouritePress,
     shouldLoadMore,
     styles: styles.homeStyles,
     ...props,

@@ -24,8 +24,10 @@ const HomeScreen = () => {
     handlePagination,
     shouldLoadMore,
     isPaginating,
+    onFavouritePress,
+    isFavourite,
+    onUnFavouritePress,
   } = useHome();
-  const isFavourite = true;
 
   const renderItem = ({ item }: { item: UserList }) => {
     return (
@@ -41,7 +43,7 @@ const HomeScreen = () => {
             ellipsizeMode={'tail'}
             style={styles.name}
             preset={'h4'}>
-            {item.name}
+            {`${item.name}`}
           </Text>
 
           <Text
@@ -53,15 +55,19 @@ const HomeScreen = () => {
           </Text>
         </View>
 
-        {!isFavourite ? (
-          <TouchableOpacity>
+        {isFavourite(item.id) ? (
+          <TouchableOpacity
+            style={styles.favIconContainer}
+            onPress={() => onUnFavouritePress(item)}>
             {getIcons(Icons.FAV_ICON, {
               resizeMode: 'contain',
               style: styles.favIcon,
             })}
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity>
+          <TouchableOpacity
+            style={styles.favIconContainer}
+            onPress={() => onFavouritePress(item)}>
             {getIcons(Icons.FAV_OUTLINE_ICON, {
               resizeMode: 'contain',
               style: styles.favIcon,

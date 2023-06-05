@@ -39,5 +39,8 @@
   "bottomTab": {
     "home": "Home",
     "favourite": "Favourite"
+  },
+  "favourites": {
+    "noFavourites": "No Favourites added yet"
   }
 }

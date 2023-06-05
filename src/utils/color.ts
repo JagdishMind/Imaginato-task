@@ -4,6 +4,7 @@ export const color = {
   light: {
     backgroundColor: '#28282B',
     black: '#000000',
+    borderColor: '#696969',
     errorBg: '#F4D2D2',
     lightGray: '#DDDDDD',
     primaryColor: 'red',

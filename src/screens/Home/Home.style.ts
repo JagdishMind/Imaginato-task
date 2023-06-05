@@ -8,10 +8,11 @@ import {
   scaleWidth,
 } from '@src/utils';
 
-export const homeStyles = ({ white, lightGray }: Palette) =>
+export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
   StyleSheet.create({
     contentContainer: {
       paddingBottom: scaleHeight(100),
+      paddingHorizontal: scaleWidth(10),
     },
     date: { fontSize: scaledSize(13) },
     debugIcon: {
@@ -23,6 +24,9 @@ export const homeStyles = ({ white, lightGray }: Palette) =>
     favIcon: {
       ...scaled(22),
       tintColor: white,
+    },
+    favIconContainer: {
+      padding: scaledSize(10),
     },
     flatListStyles: {
       marginTop: scaleHeight(10),
@@ -45,7 +49,7 @@ export const homeStyles = ({ white, lightGray }: Palette) =>
       paddingVertical: scaleHeight(4),
     },
     itemSeparator: {
-      backgroundColor: lightGray,
+      backgroundColor: borderColor,
       height: 2,
       marginVertical: scaledSize(10),
       width: '100%',

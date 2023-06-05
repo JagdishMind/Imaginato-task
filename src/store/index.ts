@@ -15,10 +15,18 @@ import {
 
 import { storageMmkv } from '@src/context';
 
-import { authData, authentication, usersData, usersList } from './reducers';
+import {
+  authData,
+  authentication,
+  favouritesList,
+  favouriteUsersData,
+  usersData,
+  usersList,
+} from './reducers';
 
 const rootReducer = combineReducers({
   authData,
+  favouriteUsersData,
   usersData,
 });
 
@@ -42,7 +50,7 @@ export const reduxStorage: Storage = {
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: [authentication, usersList],
+  whitelist: [authentication, usersList, favouritesList],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
