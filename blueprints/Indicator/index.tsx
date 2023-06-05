@@ -68,7 +68,7 @@ export const IndicatorViewRef = (
           color={color.primaryColor}
           style={styles.loaderStyle}
         />
-        <Text preset="h2" color={color.textColor}>
+        <Text preset="h2" color={color.primaryColor}>
           Please wait ...
         </Text>
       </View>
@@ -80,7 +80,7 @@ export const IndicatorView = React.forwardRef<IndicatorRef, IndicatorProps>(
   IndicatorViewRef
 );
 
-export const indicatorStyles = ({ backgroundColor }: Palette) => {
+export const indicatorStyles = ({ tabColor }: Palette) => {
   const styles = StyleSheet.create({
     container: {
       alignItems: 'center',
@@ -89,7 +89,7 @@ export const indicatorStyles = ({ backgroundColor }: Palette) => {
     },
     loaderContainer: {
       alignItems: 'center',
-      backgroundColor: backgroundColor,
+      backgroundColor: tabColor,
       borderRadius: scaledSize(7),
       justifyContent: 'center',
       padding: scaledSize(10),

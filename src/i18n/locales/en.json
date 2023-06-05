@@ -15,7 +15,8 @@
     "passwordValidSmall": "Password must contain at least one lowercase.",
     "passwordValidNumber": "Password must contain at least one number.",
     "PasswordMinimumChar": "Password must contain at least 8 characters.",
-    "passwordValidSpecialChar": "Password must contain at least one special character."
+    "passwordValidSpecialChar": "Password must contain at least one special character.",
+    "invalidCred": "Invalid user credentials, Please enter valid credentials"
   },
   "bottomTab": {
     "home": "Home",
@@ -25,6 +26,7 @@
     "title": "Home"
   },
   "favourites": {
+    "title": "Favourites",
     "noFavourites": "No Favourites added yet"
   }
 }

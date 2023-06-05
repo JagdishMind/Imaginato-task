@@ -6,11 +6,9 @@ export enum Screen {
   HOME = 'HOME',
   FAVOURITE = 'FAVOURITE',
   LOGIN_SCREEN = 'LOGIN_SCREEN',
-  SETTING = 'SETTING',
 }
 
 export type NavStackParams = {
-  [Screen.SETTING]: undefined;
   [Screen.BOTTOM_TAB_NAVIGATION]?: NavigatorScreenParams<BottomTabStackParamList>;
   [Screen.HOME]?: undefined;
   [Screen.FAVOURITE]?: undefined;

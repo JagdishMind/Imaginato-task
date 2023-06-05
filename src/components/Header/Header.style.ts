@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { Palette, scaleHeight } from '../../utils';
 
-export const headerStyles = ({ lightGray }: Palette) =>
+export const headerStyles = ({ tabColor, white }: Palette) =>
   StyleSheet.create({
     backButtonContainer: {
       end: 0,
@@ -12,7 +12,7 @@ export const headerStyles = ({ lightGray }: Palette) =>
     },
     container: {
       alignItems: 'center',
-      backgroundColor: lightGray,
+      backgroundColor: tabColor,
       elevation: 4,
       flexDirection: 'row',
       height: scaleHeight(60),
@@ -21,5 +21,5 @@ export const headerStyles = ({ lightGray }: Palette) =>
       shadowRadius: 1,
       width: '100%',
     },
-    title: { textAlign: 'center', width: '100%' },
+    title: { color: white, textAlign: 'center', width: '100%' },
   });

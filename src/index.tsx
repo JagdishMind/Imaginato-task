@@ -1,7 +1,12 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useColorScheme } from 'react-native';
 
-import { ImageProps, IndicatorRef, IndicatorView } from '@app/blueprints';
+import {
+  ImageProps,
+  IndicatorRef,
+  IndicatorView,
+  ToastView,
+} from '@app/blueprints';
 import {
   NavigationContainer,
   NavigationContainerRef,
@@ -97,6 +102,7 @@ export const MainApp = () => {
           <PersistGate loading={null} persistor={persistor}>
             <AppNavigation />
             <IndicatorView isLoading={false} ref={loader} />
+            <ToastView />
           </PersistGate>
         </NavigationContainer>
       </AppContext.Provider>

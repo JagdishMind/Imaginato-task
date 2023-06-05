@@ -5,8 +5,6 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 
-import { NetworkLoggerScreen } from '@src/screens';
-
 import { NavStackParams, Screen } from './appNavigation.type';
 import { BottomTabNavigation } from './bottomTabNavigation';
 
@@ -30,12 +28,6 @@ export const MainStackNavigation = () => {
         }}
         component={BottomTabNavigation}
       />
-      {__DEV__ && (
-        <MainStack.Screen
-          name={Screen.SETTING}
-          component={NetworkLoggerScreen}
-        />
-      )}
     </MainStack.Navigator>
   );
 };

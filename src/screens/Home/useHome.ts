@@ -6,11 +6,12 @@ import { useSelector } from 'react-redux';
 import { useAppContext } from '@src/context';
 import { FavouritesList, UserList } from '@src/services';
 import {
+  clearCredentials,
   getFavouritesData,
   setFavouriteUser,
   useAppDispatch,
-  validateCredentials,
 } from '@src/store';
+import { isNetworkConnected } from '@src/utils';
 
 const INITIAL_PAGE = 0;
 
@@ -21,11 +22,16 @@ const useHome = () => {
   const dispatch = useAppDispatch();
   const shouldLoadMore = useRef(true);
   const currentPage = useRef<number>(0);
-  const [data, setUsers] = useState<UserList[]>([]);
+  const [data, setData] = useState<UserList[]>([]);
   const myFavourites: UserList[] = useSelector(getFavouritesData);
 
   const getUsers = useCallback(
     async (isPullToRefresh: boolean = false) => {
+      const isConnected = await isNetworkConnected();
+      if (!isConnected) {
+        showToast(contents('common', 'internetConnectionError'), 'error');
+        return;
+      }
       if (
         !isPullToRefresh &&
         loader.current?.isLoading &&
@@ -42,7 +48,7 @@ const useHome = () => {
               shouldLoadMore.current = false;
             } else {
               shouldLoadMore.current = true;
-              setUsers(item => {
+              setData(item => {
                 return [...item, ...res];
               });
             }
@@ -56,13 +62,13 @@ const useHome = () => {
           loader.current?.hide();
         });
     },
-    [loader, services]
+    [contents, loader, services]
   );
 
   const clearUsers = () => {
     currentPage.current = INITIAL_PAGE;
     shouldLoadMore.current = false;
-    setUsers([]);
+    setData([]);
   };
 
   const onPullToRefresh = () => {
@@ -76,13 +82,7 @@ const useHome = () => {
   };
 
   const onLogoutPress = useCallback(() => {
-    dispatch(
-      validateCredentials({
-        email: ' ',
-        isLoggedIn: false,
-        password: '',
-      })
-    );
+    dispatch(clearCredentials());
   }, [dispatch]);
 
   const onUnFavouritePress = useCallback(

@@ -4,10 +4,12 @@ type loginData = {
   email: string;
   password: string;
   isLoggedIn?: boolean;
+  errorMessage?: string;
 };
 
 const initialState: loginData = {
   email: '',
+  errorMessage: undefined,
   isLoggedIn: false,
   password: '',
 };
@@ -21,16 +23,24 @@ export const authSlice = createSlice({
   initialState,
   name: 'authData',
   reducers: {
+    clearCredentials: () => initialState,
     validateCredentials: (state, { payload }: PayloadAction<loginData>) => {
-      state.isLoggedIn =
+      if (
         payload.email === userCred.email &&
-        payload.password === userCred.Password;
+        payload.password === userCred.Password
+      ) {
+        state.isLoggedIn = true;
+        state.errorMessage = undefined;
+      } else {
+        state.isLoggedIn = false;
+        state.errorMessage = 'Invalid credentials';
+      }
     },
   },
 });
 
 export const {
   reducer: authData,
-  actions: { validateCredentials },
+  actions: { validateCredentials, clearCredentials },
   name: authentication,
 } = authSlice;

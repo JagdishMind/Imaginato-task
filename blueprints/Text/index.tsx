@@ -65,7 +65,7 @@ export const presets = {
   title: {
     ...BASE_TEXT,
     fontFamily: Fonts.Poppins,
-    fontSize: scaledSize(13),
+    fontSize: scaledSize(18),
     fontWeight: '700',
   } as TextStyle,
 };

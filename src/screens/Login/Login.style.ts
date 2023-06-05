@@ -9,9 +9,10 @@ import {
   scaleWidth,
 } from '@src/utils';
 
-export const loginStyles = ({ white, black }: Palette) =>
+export const loginStyles = ({ white, tabColor }: Palette) =>
   StyleSheet.create({
     btnContainer: {
+      backgroundColor: tabColor,
       borderRadius: scaledSize(8),
       marginTop: scaleHeight(40),
       paddingVertical: 0,
@@ -31,7 +32,6 @@ export const loginStyles = ({ white, black }: Palette) =>
       flexGrow: 1,
     },
     loginText: {
-      color: black,
       paddingVertical: !isIOS ? 0 : undefined,
     },
     titleStyles: {

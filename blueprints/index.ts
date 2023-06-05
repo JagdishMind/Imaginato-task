@@ -3,4 +3,4 @@ export * from './Image';
 export * from './Indicator';
 export * from './Button';
 export * from './TextInput';
-export { showToast } from './Toast/Toast';
+export * from './Toast/Toast';

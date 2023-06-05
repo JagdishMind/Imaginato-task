@@ -1,9 +1,16 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { showToast } from '@app/blueprints';
+import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 
 import { useAppContext } from '@src/context';
-import { useAppDispatch, validateCredentials } from '@src/store';
+import {
+  clearCredentials,
+  error,
+  useAppDispatch,
+  validateCredentials,
+} from '@src/store';
 import { Pattern } from '@src/utils';
 
 const useLogin = () => {
@@ -12,6 +19,15 @@ const useLogin = () => {
   const [isPassVisible, setIsPassVisible] = useState(true);
 
   const dispatch = useAppDispatch();
+
+  const errorMessage = useSelector(error);
+
+  useEffect(() => {
+    if (errorMessage) {
+      showToast(contents('login', 'invalidCred'), 'error');
+      dispatch(clearCredentials());
+    }
+  }, [contents, dispatch, errorMessage]);
 
   const signInValidation = yup.object().shape({
     email: yup
@@ -40,7 +56,7 @@ const useLogin = () => {
   });
 
   const initialValues = {
-    email: 'reactnative@jetdevs.com',
+    email: '',
     password: '',
   };
 
@@ -54,13 +70,13 @@ const useLogin = () => {
             password: values.password,
           })
         );
-        // navigation.navigate(Screen.HOME);
-      } catch (error) {
+      } catch (e) {
+        showToast(contents('common', 'errorMessage'));
       } finally {
         loader.current?.hide();
       }
     },
-    [dispatch, loader]
+    [contents, dispatch, loader]
   );
 
   const onToggleEyeIcon = useCallback(

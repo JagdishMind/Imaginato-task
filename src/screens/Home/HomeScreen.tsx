@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 
 import { Icons } from '@src/assets';
 import { BaseLayout, Header } from '@src/components';
@@ -21,6 +21,7 @@ const HomeScreen = () => {
     isFavourite,
     onUnFavouritePress,
     contents,
+    color,
   } = useHome();
 
   const renderItemSeparator = () => <View style={styles.itemSeparator} />;
@@ -57,8 +58,13 @@ const HomeScreen = () => {
         automaticallyAdjustContentInsets={false}
         onEndReached={onNextPage}
         onEndReachedThreshold={0.5}
-        onRefresh={onPullToRefresh}
-        refreshing={isRefreshing}
+        refreshControl={
+          <RefreshControl
+            onRefresh={onPullToRefresh}
+            refreshing={isRefreshing}
+            tintColor={color.white}
+          />
+        }
       />
     </BaseLayout>
   );

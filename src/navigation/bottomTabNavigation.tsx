@@ -14,7 +14,7 @@ import { isIOS } from '@src/constants';
 import { useAppContext } from '@src/context';
 import { FavouriteScreen } from '@src/screens';
 import Home from '@src/screens/Home/HomeScreen';
-import { logger, Palette, scaled, scaleHeight, screenWidth } from '@src/utils';
+import { Palette, scaled, scaleHeight, screenWidth } from '@src/utils';
 
 import { BottomTabStackParamList, Screen } from './appNavigation.type';
 
@@ -22,7 +22,7 @@ const BottomTab = createBottomTabNavigator<BottomTabStackParamList>();
 
 interface BottomNavTab {
   title: string;
-  icon: JSX.Element;
+  icon: Icons;
 }
 
 const bottomScreenOptions: BottomTabNavigationOptions = {
@@ -57,17 +57,11 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
   const styles = bottomTabStyle(color);
   const arrayBottomTabData: Array<BottomNavTab> = [
     {
-      icon: getIcons(Icons.HOME_ICON, {
-        resizeMode: 'contain',
-        style: styles.tabBarIcon,
-      }),
+      icon: Icons.HOME_ICON,
       title: contents('bottomTab', 'home'),
     },
     {
-      icon: getIcons(Icons.FAV_ICON, {
-        resizeMode: 'contain',
-        style: styles.tabBarIcon,
-      }),
+      icon: Icons.FAV_ICON,
       title: contents('bottomTab', 'favourite'),
     },
   ];
@@ -76,7 +70,6 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
       {state.routes.map((route, index) => {
         const isFocused = state.index === index;
         const onPress = () => {
-          logger('tabPress');
           const event = navigation.emit({
             canPreventDefault: true,
             target: route.key,
@@ -100,7 +93,13 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
               isFocused ? styles.selectedTabBarItemStyle : {},
             ]}>
             <View style={styles.tabIcon}>
-              {arrayBottomTabData[index]?.icon}
+              {getIcons(arrayBottomTabData[index]?.icon || Icons.HOME_ICON, {
+                resizeMode: 'contain',
+                style: [
+                  styles.tabBarIcon,
+                  isFocused && styles.tabBarSelectedIcon,
+                ],
+              })}
             </View>
 
             <Text
@@ -115,7 +114,12 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
   );
 });
 
-const bottomTabStyle = ({ black, primaryColor, lightGray, white }: Palette) => {
+const bottomTabStyle = ({
+  tabColor,
+  primaryColor,
+  lightGray,
+  white,
+}: Palette) => {
   const styles = StyleSheet.create({
     safeAreaStyle: { backgroundColor: lightGray },
     selectedTabBarItemStyle: {
@@ -123,27 +127,30 @@ const bottomTabStyle = ({ black, primaryColor, lightGray, white }: Palette) => {
     },
     tabBarContainer: {
       alignItems: 'center',
-      backgroundColor: black,
+      backgroundColor: tabColor,
       elevation: 16,
       flexDirection: 'row',
       justifyContent: 'space-between',
       paddingBottom: scaleHeight(isIOS ? 10 : 10),
     },
-    tabBarIcon: { ...scaled(22), tintColor: white },
+    tabBarIcon: { ...scaled(22), tintColor: lightGray },
     tabBarItemStyle: {
       alignItems: 'center',
-      backgroundColor: lightGray,
-      borderColor: lightGray,
+      backgroundColor: tabColor,
+      borderColor: tabColor,
       borderTopWidth: scaleHeight(1.5),
       justifyContent: 'center',
       width: screenWidth / 2 - 2,
+    },
+    tabBarSelectedIcon: {
+      tintColor: white,
     },
     tabIcon: {
       marginBottom: scaleHeight(8),
       marginTop: scaleHeight(8),
     },
     tabItemText: {
-      fontSize: scaleHeight(10),
+      fontSize: scaleHeight(12),
     },
   });
   return styles;

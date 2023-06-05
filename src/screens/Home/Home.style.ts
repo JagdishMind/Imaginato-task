@@ -56,6 +56,7 @@ export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
     },
     logout: {
       ...scaled(25),
+      tintColor: white,
       transform: [{ rotate: '90deg' }],
     },
     name: {

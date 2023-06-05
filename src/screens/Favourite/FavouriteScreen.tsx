@@ -3,7 +3,7 @@ import { FlatList, View } from 'react-native';
 
 import { Text } from '@app/blueprints';
 
-import { BaseLayout } from '@src/components';
+import { BaseLayout, Header } from '@src/components';
 import { UserList } from '@src/services';
 
 import useFavourite from './useFavourite';
@@ -30,6 +30,7 @@ const FavouriteScreen = () => {
 
   return (
     <BaseLayout>
+      <Header title={contents('favourites', 'title')} />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data}
