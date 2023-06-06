@@ -34,7 +34,7 @@ const HomeScreen = () => {
   const renderFooter = () => {
     return (
       <>
-        {isLoading ? (
+        {isLoading && !isRefreshing ? (
           <ActivityIndicator
             size="large"
             color={color.primaryColor}
