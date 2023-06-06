@@ -1,5 +1,10 @@
 import React from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  View,
+} from 'react-native';
 
 import { Icons } from '@src/assets';
 import { BaseLayout, Header } from '@src/components';
@@ -11,6 +16,7 @@ import { UserView } from './views';
 const HomeScreen = () => {
   const {
     styles,
+    isLoading,
     data,
     getIcons,
     onLogoutPress,
@@ -20,11 +26,24 @@ const HomeScreen = () => {
     onFavouritePress,
     isFavourite,
     onUnFavouritePress,
-    contents,
     color,
   } = useHome();
 
   const renderItemSeparator = () => <View style={styles.itemSeparator} />;
+
+  const renderFooter = () => {
+    return (
+      <>
+        {isLoading ? (
+          <ActivityIndicator
+            size="large"
+            color={color.primaryColor}
+            style={styles.loader}
+          />
+        ) : null}
+      </>
+    );
+  };
 
   const renderItem = ({ item }: { item: UserList }) => {
     return (
@@ -40,7 +59,6 @@ const HomeScreen = () => {
   return (
     <BaseLayout>
       <Header
-        title={contents('home', 'title')}
         rightComponent={getIcons(Icons.LOGOUT_ICON, {
           resizeMode: 'contain',
           style: styles.logout,
@@ -51,6 +69,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         data={data}
         ItemSeparatorComponent={renderItemSeparator}
+        ListFooterComponent={renderFooter}
         contentContainerStyle={styles.contentContainer}
         style={styles.flatListStyles}
         keyExtractor={(item, index) => item.email + `-` + index}
@@ -62,7 +81,7 @@ const HomeScreen = () => {
           <RefreshControl
             onRefresh={onPullToRefresh}
             refreshing={isRefreshing}
-            tintColor={color.white}
+            tintColor={color.primaryColor}
           />
         }
       />

@@ -1,34 +1,30 @@
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
+import { Icons } from '@src/assets';
 import { useAppContext } from '@src/context';
 
-import { Text } from '../../../blueprints/Text';
-
 interface CustomHeaderProps {
-  title: string;
   rightComponent?: JSX.Element;
   onRightComponentPress?: () => void;
 }
 
 export const Header = React.memo(
   ({
-    title,
     rightComponent,
     onRightComponentPress: onRightComponentPress,
   }: CustomHeaderProps) => {
-    const { styles: appStyles } = useAppContext();
+    const { styles: appStyles, getIcons } = useAppContext();
     const styles = appStyles.headerStyles;
 
     return (
       <View style={styles.container}>
-        <Text
-          numberOfLines={1}
-          ellipsizeMode={'middle'}
-          style={styles.title}
-          preset={'title'}>
-          {title}
-        </Text>
+        <View style={styles.iconContainerStyle}>
+          {getIcons(Icons.APP_LOGO, {
+            resizeMode: 'contain',
+            style: styles.loginIconStyle,
+          })}
+        </View>
 
         {!!rightComponent && (
           <TouchableOpacity

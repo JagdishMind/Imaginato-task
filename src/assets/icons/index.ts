@@ -8,4 +8,7 @@ export enum Icons {
   EYE_SHOW_ICON = require('./eye_show.png'),
   LOGOUT_ICON = require('./logout.png'),
   LOCATION = require('./location.png'),
+  APP_LOGO = require('./app_logo.png'),
+  EMAIL_LOGO = require('./email_logo.png'),
+  LOCK_ICON = require('./unlock.png'),
 }

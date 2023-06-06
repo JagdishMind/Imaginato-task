@@ -8,7 +8,7 @@ import {
   scaleWidth,
 } from '@src/utils';
 
-export const homeStyles = ({ white, lightGray, black, pink }: Palette) =>
+export const homeStyles = ({ white, black, primaryColor, darkGrey }: Palette) =>
   StyleSheet.create({
     bodyContainer: {
       justifyContent: 'center',
@@ -26,14 +26,15 @@ export const homeStyles = ({ white, lightGray, black, pink }: Palette) =>
       marginTop: 4,
     },
     extraText: {
-      fontSize: 10,
-      marginEnd: 8,
-      paddingHorizontal: 8,
+      borderRadius: scaledSize(4),
+      fontSize: scaledSize(10),
+      marginEnd: scaledSize(8),
+      paddingHorizontal: scaledSize(8),
       textTransform: 'capitalize',
     },
     favIcon: {
       ...scaled(28),
-      tintColor: pink,
+      tintColor: primaryColor,
     },
     favIconContainer: {
       padding: scaledSize(10),
@@ -77,11 +78,14 @@ export const homeStyles = ({ white, lightGray, black, pink }: Palette) =>
     },
     itemSeparator: {
       height: 1,
-      marginVertical: scaledSize(10),
+      marginVertical: scaledSize(6),
       width: '100%',
     },
+    loader: {
+      marginTop: scaledSize(16),
+    },
     location: {
-      color: lightGray,
+      color: darkGrey,
       fontSize: scaledSize(10),
       marginStart: scaledSize(4),
     },
@@ -91,12 +95,12 @@ export const homeStyles = ({ white, lightGray, black, pink }: Palette) =>
     },
     locationIcon: {
       height: scaleWidth(12),
-      tintColor: lightGray,
+      tintColor: darkGrey,
       width: scaleWidth(12),
     },
     logout: {
       ...scaled(25),
-      tintColor: white,
+      tintColor: black,
       transform: [{ rotate: '90deg' }],
     },
     name: {

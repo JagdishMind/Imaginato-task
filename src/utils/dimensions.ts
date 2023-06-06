@@ -8,19 +8,17 @@ export const designWidth = 375;
 export const designHeight = 812;
 
 const scaleWidth = (val: number) => {
-  return (screenWidth * val) / designWidth;
+  return val;
 };
 
 const scaleHeight = (val: number) => {
-  return (screenHeight * val) / designHeight;
+  return val;
 };
-
-const scale = Math.min(screenWidth / designWidth, screenHeight / designHeight);
 
 const moderateScale = (size: number, factor = 1) =>
   size + (scaleWidth(size) - size) * factor;
 
-const scaledSize = (size: number) => Math.ceil(size * scale);
+const scaledSize = (size: number) => size;
 
 export {
   moderateScale,

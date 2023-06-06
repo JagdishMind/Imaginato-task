@@ -28,7 +28,7 @@ const FavouriteScreen = () => {
 
   return (
     <BaseLayout>
-      <Header title={contents('favourites', 'title')} />
+      <Header />
       <View style={styles.bodyContainer}>
         <FlatList
           showsVerticalScrollIndicator={false}

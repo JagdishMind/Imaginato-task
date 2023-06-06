@@ -16,9 +16,11 @@ import { isNetworkConnected } from '@src/utils';
 const INITIAL_PAGE = 0;
 
 const useHome = () => {
-  const { styles, loader, getIcons, contents, getImages, services, ...props } =
+  const { styles, getIcons, contents, getImages, services, ...props } =
     useAppContext();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const isFetching = useRef(false);
+  const [isLoading, setLoading] = useState(isFetching.current);
   const dispatch = useAppDispatch();
   const shouldLoadMore = useRef(true);
   const currentPage = useRef<number>(0);
@@ -32,13 +34,10 @@ const useHome = () => {
         showToast(contents('common', 'internetConnectionError'), 'error');
         return;
       }
-      if (
-        !isPullToRefresh &&
-        loader.current?.isLoading &&
-        shouldLoadMore.current
-      )
+      if (!isPullToRefresh && isFetching.current && shouldLoadMore.current)
         return;
-      loader.current?.show();
+      isFetching.current = true;
+      setLoading(true);
       currentPage.current += 1;
       await services
         .getUserList({ page: currentPage.current })
@@ -55,14 +54,17 @@ const useHome = () => {
           }
         })
         .catch(error => {
-          showToast(error);
+          if (error && error !== null && error.length > 0) {
+            showToast(error, 'error');
+          }
         })
         .finally(() => {
+          isFetching.current = false;
+          setLoading(false);
           setIsRefreshing(false);
-          loader.current?.hide();
         });
     },
-    [contents, loader, services]
+    [contents, isFetching, services]
   );
 
   const clearUsers = () => {
@@ -87,7 +89,6 @@ const useHome = () => {
 
   const onUnFavouritePress = useCallback(
     (item: UserList) => {
-      loader.current?.show();
       try {
         if (myFavourites && myFavourites.length > 0) {
           const newFavouritesList = myFavourites.filter(
@@ -97,16 +98,13 @@ const useHome = () => {
         }
       } catch (error) {
         showToast(contents('common', 'errorMessage'), 'error');
-      } finally {
-        loader.current?.hide();
       }
     },
-    [loader, myFavourites, dispatch, contents]
+    [myFavourites, dispatch, contents]
   );
 
   const onFavouritePress = useCallback(
     (item: UserList) => {
-      loader.current?.show();
       let favouriteUsers: FavouritesList[] = [];
       try {
         if (myFavourites && myFavourites.length > 0) {
@@ -116,11 +114,10 @@ const useHome = () => {
         }
         dispatch(setFavouriteUser(favouriteUsers));
       } catch (error) {
-      } finally {
-        loader.current?.hide();
+        showToast(contents('common', 'errorMessage'), 'error');
       }
     },
-    [dispatch, myFavourites, loader]
+    [contents, dispatch, myFavourites]
   );
 
   const isFavourite = useCallback(
@@ -144,6 +141,7 @@ const useHome = () => {
     getIcons,
     getImages,
     isFavourite,
+    isLoading,
     isRefreshing,
     onFavouritePress,
     onLogoutPress,

@@ -11,14 +11,14 @@ export interface Info {
 }
 
 export interface Result {
-  gender: string;
+  gender?: string;
   name: Name;
   location: Location;
   email: string;
   login: Login;
   dob: Dob;
   registered: Dob;
-  phone: string;
+  phone?: string;
   cell: string;
   id: ID;
   picture: Picture;

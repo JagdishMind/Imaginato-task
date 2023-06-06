@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Keyboard } from 'react-native';
 
 import { showToast } from '@app/blueprints';
 import { useSelector } from 'react-redux';
@@ -33,25 +34,14 @@ const useLogin = () => {
     email: yup
       .string()
       .trim()
+      .required(contents('login', 'requiredEmail'))
       .email(contents('login', 'emailInvalid'))
-      .required(contents('login', 'emailEmptyVal')),
+      .matches(Pattern.email, contents('login', 'emailInvalid')),
     password: yup
       .string()
       .trim()
       .required(contents('login', 'passwordRequired'))
-      .matches(
-        Pattern.lowercasePasswordRegex,
-        contents('login', 'passwordValidSmall')
-      )
-      .matches(
-        Pattern.numPasswordRegex,
-        contents('login', 'passwordValidNumber')
-      )
-      .matches(
-        Pattern.specialCharPasswordRegex,
-        contents('login', 'passwordValidSpecialChar')
-      )
-      .min(8, contents('login', 'PasswordMinimumChar'))
+      .min(6, contents('login', 'PasswordMinimumChar'))
       .max(20, contents('login', 'PasswordMaximumChar')),
   });
 
@@ -62,6 +52,7 @@ const useLogin = () => {
 
   const onLoginPress = useCallback(
     (values: typeof initialValues) => {
+      Keyboard.dismiss();
       loader.current?.show();
       try {
         dispatch(
@@ -71,7 +62,7 @@ const useLogin = () => {
           })
         );
       } catch (e) {
-        showToast(contents('common', 'errorMessage'));
+        showToast(contents('common', 'errorMessage'), 'error');
       } finally {
         loader.current?.hide();
       }

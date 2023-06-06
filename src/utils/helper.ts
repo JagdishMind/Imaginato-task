@@ -8,10 +8,7 @@ export const isNetworkConnected = async () => {
 };
 
 export const Pattern = {
-  lowercasePasswordRegex: /w*[a-z]w*/,
-  numPasswordRegex: /\d/,
-  specialCharPasswordRegex: /[!@#$%^&*()\-_"=+{}; :,<.>]/,
-  uppercasePasswordRegex: /\w*[A-Z]\w*/,
+  email: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
 } as const;
 
 export const logger = (prefix?: any) => {

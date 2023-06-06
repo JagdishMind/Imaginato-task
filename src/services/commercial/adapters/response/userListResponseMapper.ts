@@ -11,24 +11,32 @@ export class UserListDataMapper {
       let genderExtraColor = getRandomColor();
       let genderBGColor = genderExtraColor + '45';
 
-      const genderExtra: Extra = {
-        bodyColor: genderBGColor,
-        tag: item.gender,
-        textColor: genderExtraColor,
-      };
+      const genderExtra: Extra | null = item?.gender
+        ? {
+            bodyColor: genderBGColor,
+            tag: item.gender,
+            textColor: genderExtraColor,
+          }
+        : null;
 
       let phoneTextColor = getRandomColor();
       let phoneBackgroundColor = phoneTextColor + '45';
 
-      const phoneExtra: Extra = {
-        bodyColor: phoneBackgroundColor,
-        tag: item.phone,
-        textColor: phoneTextColor,
-      };
+      const phoneExtra: Extra | null = item?.phone
+        ? {
+            bodyColor: phoneBackgroundColor,
+            tag: item.phone,
+            textColor: phoneTextColor,
+          }
+        : null;
+
+      let extras: Extra[] = [genderExtra, phoneExtra].filter(
+        ele => ele !== null
+      ) as Extra[];
 
       return {
         email: item.email,
-        extras: [genderExtra, phoneExtra],
+        extras: extras,
         id: `${item.id.name}-${item.id.value}`.replace(/\s+/g, ''),
         location: item.location.city + ', ' + item.location.country,
         name: item.name.first + ' ' + item.name.last,

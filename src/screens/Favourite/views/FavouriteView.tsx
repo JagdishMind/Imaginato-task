@@ -23,7 +23,7 @@ export const FavouriteView = ({
   } = useAppContext();
 
   return (
-    <View>
+    <>
       <View key={item.id} style={styles.itemContainer}>
         {getImages(item.profileUrlLarge, {
           resizeMode: 'cover',
@@ -50,6 +50,6 @@ export const FavouriteView = ({
         </TouchableOpacity>
       </View>
       <View style={styles.itemSeparator} />
-    </View>
+    </>
   );
 };

@@ -9,7 +9,12 @@ import {
   screenHeight,
 } from '@src/utils';
 
-export const favouriteStyles = ({ white, black, borderColor, pink }: Palette) =>
+export const favouriteStyles = ({
+  white,
+  black,
+  borderColor,
+  primaryColor,
+}: Palette) =>
   StyleSheet.create({
     bodyContainer: {
       backgroundColor: white,
@@ -26,7 +31,7 @@ export const favouriteStyles = ({ white, black, borderColor, pink }: Palette) =>
     },
     favIcon: {
       ...scaled(28),
-      tintColor: pink,
+      tintColor: primaryColor,
     },
     favIconContainer: {
       padding: scaledSize(10),
@@ -37,7 +42,7 @@ export const favouriteStyles = ({ white, black, borderColor, pink }: Palette) =>
     image: {
       borderRadius: scaledSize(45),
       height: scaleWidth(45),
-      tintColor: pink,
+      tintColor: primaryColor,
       width: scaleWidth(45),
     },
     itemContainer: {
@@ -46,7 +51,7 @@ export const favouriteStyles = ({ white, black, borderColor, pink }: Palette) =>
       flex: 1,
       flexDirection: 'row',
       marginVertical: scaleWidth(4),
-      paddingHorizontal: scaleWidth(8),
+      paddingHorizontal: scaleWidth(16),
       paddingVertical: scaleHeight(4),
     },
     itemSeparator: {
@@ -56,10 +61,10 @@ export const favouriteStyles = ({ white, black, borderColor, pink }: Palette) =>
     },
     name: {
       color: black,
-      fontSize: scaledSize(20),
+      fontSize: scaledSize(16),
     },
     noFavouritesText: {
-      color: pink,
+      color: black,
       textAlign: 'center',
     },
     userDetailContainer: {

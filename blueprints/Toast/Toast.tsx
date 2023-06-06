@@ -10,29 +10,31 @@ export const ToastView = () => {
   const { color } = useAppContext();
 
   const toastConfig: ToastConfig = {
-    error: ({ text1 }) => (
-      <BaseToast
-        style={{
-          backgroundColor: color.errorBg,
-          borderLeftColor: color.red,
-        }}
-        text1={text1}
-        text1NumberOfLines={2}
-        text1Style={{ color: color.black }}
-      />
-    ),
+    error: ({ text1 }) =>
+      (text1 ?? '').length === 0 ? null : (
+        <BaseToast
+          style={{
+            backgroundColor: color.errorBg,
+            borderLeftColor: color.red,
+          }}
+          text1={text1}
+          text1NumberOfLines={2}
+          text1Style={{ color: color.black }}
+        />
+      ),
 
-    success: ({ text1 }) => (
-      <BaseToast
-        style={{
-          backgroundColor: color.white,
-          borderLeftColor: color.progressGreen,
-        }}
-        text1={text1}
-        text1NumberOfLines={2}
-        text1Style={{ color: color.black }}
-      />
-    ),
+    success: ({ text1 }) =>
+      (text1 ?? '').length === 0 ? null : (
+        <BaseToast
+          style={{
+            backgroundColor: color.white,
+            borderLeftColor: color.progressGreen,
+          }}
+          text1={text1}
+          text1NumberOfLines={2}
+          text1Style={{ color: color.black }}
+        />
+      ),
   };
   return <Toast config={toastConfig} autoHide={true} visibilityTime={3000} />;
 };

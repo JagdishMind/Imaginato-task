@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { Palette, scaleHeight } from '../../utils';
 
-export const headerStyles = ({ tabColor, white }: Palette) =>
+export const headerStyles = ({ white }: Palette) =>
   StyleSheet.create({
     backButtonContainer: {
       end: 0,
@@ -12,14 +12,24 @@ export const headerStyles = ({ tabColor, white }: Palette) =>
     },
     container: {
       alignItems: 'center',
-      backgroundColor: tabColor,
+      backgroundColor: white,
       elevation: 4,
       flexDirection: 'row',
-      height: scaleHeight(60),
+      height: scaleHeight(50),
+      justifyContent: 'center',
       shadowOffset: { height: 0, width: 0 },
       shadowOpacity: 0.1,
       shadowRadius: 1,
       width: '100%',
+    },
+    iconContainerStyle: {
+      alignItems: 'center',
+      flex: 1,
+      justifyContent: 'center',
+    },
+    loginIconStyle: {
+      height: scaleHeight(25),
+      width: scaleHeight(25),
     },
     title: { color: white, textAlign: 'center', width: '100%' },
   });

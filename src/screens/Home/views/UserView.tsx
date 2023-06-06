@@ -5,7 +5,7 @@ import { Text } from '@app/blueprints';
 
 import { Icons } from '@src/assets';
 import { useAppContext } from '@src/context';
-import type { UserList } from '@src/services';
+import type { Extra, UserList } from '@src/services';
 
 interface UserViewProps {
   item: UserList;
@@ -62,9 +62,9 @@ export const UserView = React.memo(
               </View>
 
               <View style={styles.extraContainer}>
-                {item.extras.map(extraItem => {
+                {item.extras.map((extraItem: Extra, index: number) => {
                   return (
-                    <View>
+                    <View key={`${extraItem.tag}-${index}`}>
                       <Text
                         preset={'h5'}
                         numberOfLines={1}

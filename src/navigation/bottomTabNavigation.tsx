@@ -111,10 +111,7 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
               )}
             </View>
 
-            <Text
-              preset={isFocused ? 'h1' : 'h3'}
-              style={styles.tabItemText}
-              color={isFocused ? color.primaryColor : color.lightGray}>
+            <Text preset={isFocused ? 'h1' : 'h3'} style={styles.tabItemText}>
               {arrayBottomTabData[index]?.title.toUpperCase()}
             </Text>
           </Pressable>
@@ -127,14 +124,13 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
 const bottomTabStyle = ({
   tabColor,
   lightGray,
-  transparent,
-  pink,
-  unSelectedColor,
+  primaryColor,
+  backgroundColor,
 }: Palette) => {
   const styles = StyleSheet.create({
     safeAreaStyle: { backgroundColor: lightGray },
     selectedTabBarItemStyle: {
-      borderTopColor: pink,
+      borderTopColor: primaryColor,
     },
     tabBarContainer: {
       alignItems: 'center',
@@ -144,24 +140,24 @@ const bottomTabStyle = ({
       justifyContent: 'space-between',
       paddingBottom: scaleHeight(isIOS ? 10 : 10),
     },
-    tabBarIcon: { ...scaled(22), tintColor: unSelectedColor },
+    tabBarIcon: { ...scaled(22), tintColor: primaryColor },
     tabBarItemStyle: {
       alignItems: 'center',
       backgroundColor: tabColor,
-      borderColor: transparent,
+      borderColor: backgroundColor,
       borderTopWidth: scaleHeight(1.5),
       justifyContent: 'center',
-      width: screenWidth / 2 - 2,
+      width: screenWidth / 2,
     },
     tabBarSelectedIcon: {
-      tintColor: pink,
+      tintColor: primaryColor,
     },
     tabIcon: {
       marginBottom: scaleHeight(4),
       marginTop: scaleHeight(8),
     },
     tabItemText: {
-      color: pink,
+      color: primaryColor,
       fontSize: scaleHeight(10),
     },
   });

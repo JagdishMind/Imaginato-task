@@ -4,11 +4,12 @@
     "internetConnectionError": "Please check you internet connectivity."
   },
   "login": {
-    "loginAcc": "Login to your account",
+    "loginAcc": "LOGIN",
     "email": "Email",
     "password": "Password",
-    "login": "Login",
+    "login": "LOGIN",
     "emailEmptyVal": "Please enter the email address.",
+    "requiredEmail": "Please enter your email address.",
     "emailInvalid": "Please enter the correct email address.",
     "passwordRequired": "Please enter the password.",
     "PasswordMaximumChar": "You have reached your maximum limit of characters allowed",
