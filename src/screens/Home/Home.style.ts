@@ -8,8 +8,11 @@ import {
   scaleWidth,
 } from '@src/utils';
 
-export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
+export const homeStyles = ({ white, lightGray, black, pink }: Palette) =>
   StyleSheet.create({
+    bodyContainer: {
+      justifyContent: 'center',
+    },
     contentContainer: {
       paddingBottom: scaleHeight(100),
       paddingHorizontal: scaleWidth(10),
@@ -18,12 +21,19 @@ export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
     debugIcon: {
       ...scaled(22),
     },
-    email: {
-      color: lightGray,
+    extraContainer: {
+      flexDirection: 'row',
+      marginTop: 4,
+    },
+    extraText: {
+      fontSize: 10,
+      marginEnd: 8,
+      paddingHorizontal: 8,
+      textTransform: 'capitalize',
     },
     favIcon: {
-      ...scaled(22),
-      tintColor: white,
+      ...scaled(28),
+      tintColor: pink,
     },
     favIconContainer: {
       padding: scaledSize(10),
@@ -37,22 +47,52 @@ export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
       marginVertical: scaleHeight(10),
     },
     image: {
-      borderRadius: scaledSize(50),
+      borderRadius: scaledSize(76),
+      height: scaleWidth(68),
+      width: scaleWidth(68),
+    },
+    imageContainer: {
+      alignItems: 'center',
+      alignSelf: 'center',
+      backgroundColor: white,
+      borderRadius: scaledSize(76),
       height: scaleWidth(70),
+      justifyContent: 'center',
+      left: 0,
+      overflow: 'hidden',
+      position: 'absolute',
       width: scaleWidth(70),
+      zIndex: 1111,
     },
     itemContainer: {
-      alignItems: 'center',
       flex: 1,
       flexDirection: 'row',
-      paddingHorizontal: scaleWidth(8),
-      paddingVertical: scaleHeight(4),
+    },
+    itemMainContainer: {
+      backgroundColor: white,
+      borderRadius: scaledSize(8),
+      elevation: 4,
+      marginStart: scaledSize(20),
+      paddingStart: scaledSize(60),
     },
     itemSeparator: {
-      backgroundColor: borderColor,
-      height: 2,
+      height: 1,
       marginVertical: scaledSize(10),
       width: '100%',
+    },
+    location: {
+      color: lightGray,
+      fontSize: scaledSize(10),
+      marginStart: scaledSize(4),
+    },
+    locationContainer: {
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    locationIcon: {
+      height: scaleWidth(12),
+      tintColor: lightGray,
+      width: scaleWidth(12),
     },
     logout: {
       ...scaled(25),
@@ -60,7 +100,8 @@ export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
       transform: [{ rotate: '90deg' }],
     },
     name: {
-      color: white,
+      color: black,
+      fontSize: scaledSize(14),
     },
     networkButton: {
       position: 'absolute',
@@ -69,6 +110,6 @@ export const homeStyles = ({ white, lightGray, borderColor }: Palette) =>
     },
     userDetailContainer: {
       flex: 1,
-      marginHorizontal: scaledSize(12),
+      paddingVertical: scaledSize(16),
     },
   });

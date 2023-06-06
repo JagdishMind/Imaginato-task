@@ -9,14 +9,15 @@ import {
   screenHeight,
 } from '@src/utils';
 
-export const favouriteStyles = ({ white, lightGray, borderColor }: Palette) =>
+export const favouriteStyles = ({ white, black, borderColor, pink }: Palette) =>
   StyleSheet.create({
+    bodyContainer: {
+      backgroundColor: white,
+      flex: 1,
+      marginTop: 1,
+    },
     contentContainer: {
       paddingBottom: scaleHeight(100),
-      paddingHorizontal: scaleWidth(10),
-    },
-    email: {
-      color: lightGray,
     },
     emptyContainer: {
       alignItems: 'center',
@@ -24,38 +25,41 @@ export const favouriteStyles = ({ white, lightGray, borderColor }: Palette) =>
       justifyContent: 'center',
     },
     favIcon: {
-      ...scaled(22),
-      tintColor: white,
+      ...scaled(28),
+      tintColor: pink,
     },
     favIconContainer: {
       padding: scaledSize(10),
     },
     flatListStyles: {
-      marginTop: scaleHeight(10),
+      paddingTop: scaleHeight(10),
     },
     image: {
-      borderRadius: scaledSize(50),
-      height: scaleWidth(70),
-      width: scaleWidth(70),
+      borderRadius: scaledSize(45),
+      height: scaleWidth(45),
+      tintColor: pink,
+      width: scaleWidth(45),
     },
     itemContainer: {
       alignItems: 'center',
+      backgroundColor: white,
       flex: 1,
       flexDirection: 'row',
+      marginVertical: scaleWidth(4),
       paddingHorizontal: scaleWidth(8),
       paddingVertical: scaleHeight(4),
     },
     itemSeparator: {
       backgroundColor: borderColor,
-      height: 2,
-      marginVertical: scaledSize(10),
+      height: 1,
       width: '100%',
     },
     name: {
-      color: white,
+      color: black,
+      fontSize: scaledSize(20),
     },
     noFavouritesText: {
-      color: white,
+      color: pink,
       textAlign: 'center',
     },
     userDetailContainer: {

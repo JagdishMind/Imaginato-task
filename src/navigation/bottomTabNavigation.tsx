@@ -23,6 +23,7 @@ const BottomTab = createBottomTabNavigator<BottomTabStackParamList>();
 interface BottomNavTab {
   title: string;
   icon: Icons;
+  unSelectedIcon: Icons;
 }
 
 const bottomScreenOptions: BottomTabNavigationOptions = {
@@ -59,10 +60,12 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
     {
       icon: Icons.HOME_ICON,
       title: contents('bottomTab', 'home'),
+      unSelectedIcon: Icons.HOME_OUTLINE_ICON,
     },
     {
       icon: Icons.FAV_ICON,
       title: contents('bottomTab', 'favourite'),
+      unSelectedIcon: Icons.FAV_OUTLINE_ICON,
     },
   ];
   return (
@@ -93,16 +96,23 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
               isFocused ? styles.selectedTabBarItemStyle : {},
             ]}>
             <View style={styles.tabIcon}>
-              {getIcons(arrayBottomTabData[index]?.icon || Icons.HOME_ICON, {
-                resizeMode: 'contain',
-                style: [
-                  styles.tabBarIcon,
-                  isFocused && styles.tabBarSelectedIcon,
-                ],
-              })}
+              {getIcons(
+                (isFocused
+                  ? arrayBottomTabData[index]?.icon
+                  : arrayBottomTabData[index]?.unSelectedIcon) ||
+                  Icons.HOME_ICON,
+                {
+                  resizeMode: 'contain',
+                  style: [
+                    styles.tabBarIcon,
+                    isFocused && styles.tabBarSelectedIcon,
+                  ],
+                }
+              )}
             </View>
 
             <Text
+              preset={isFocused ? 'h1' : 'h3'}
               style={styles.tabItemText}
               color={isFocused ? color.primaryColor : color.lightGray}>
               {arrayBottomTabData[index]?.title.toUpperCase()}
@@ -116,14 +126,15 @@ export const TabBar = React.memo((props: BottomTabBarProps) => {
 
 const bottomTabStyle = ({
   tabColor,
-  primaryColor,
   lightGray,
-  white,
+  transparent,
+  pink,
+  unSelectedColor,
 }: Palette) => {
   const styles = StyleSheet.create({
     safeAreaStyle: { backgroundColor: lightGray },
     selectedTabBarItemStyle: {
-      borderTopColor: primaryColor,
+      borderTopColor: pink,
     },
     tabBarContainer: {
       alignItems: 'center',
@@ -133,24 +144,25 @@ const bottomTabStyle = ({
       justifyContent: 'space-between',
       paddingBottom: scaleHeight(isIOS ? 10 : 10),
     },
-    tabBarIcon: { ...scaled(22), tintColor: lightGray },
+    tabBarIcon: { ...scaled(22), tintColor: unSelectedColor },
     tabBarItemStyle: {
       alignItems: 'center',
       backgroundColor: tabColor,
-      borderColor: tabColor,
+      borderColor: transparent,
       borderTopWidth: scaleHeight(1.5),
       justifyContent: 'center',
       width: screenWidth / 2 - 2,
     },
     tabBarSelectedIcon: {
-      tintColor: white,
+      tintColor: pink,
     },
     tabIcon: {
-      marginBottom: scaleHeight(8),
+      marginBottom: scaleHeight(4),
       marginTop: scaleHeight(8),
     },
     tabItemText: {
-      fontSize: scaleHeight(12),
+      color: pink,
+      fontSize: scaleHeight(10),
     },
   });
   return styles;

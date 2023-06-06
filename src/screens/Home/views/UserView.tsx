@@ -28,49 +28,83 @@ export const UserView = React.memo(
     } = useAppContext();
 
     return (
-      <View key={item.id} style={styles.itemContainer}>
-        {getImages(item.profileUrlLarge, {
-          resizeMode: 'cover',
-          style: styles.image,
-        })}
-
-        <View style={styles.userDetailContainer}>
-          <Text
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={styles.name}
-            preset={'h4'}>
-            {`${item.name}`}
-          </Text>
-
-          <Text
-            preset={'h4'}
-            numberOfLines={1}
-            ellipsizeMode={'tail'}
-            style={styles.email}>
-            {item.email}
-          </Text>
+      <View style={styles.bodyContainer}>
+        <View style={styles.imageContainer}>
+          {getImages(item.profileUrlLarge, {
+            resizeMode: 'cover',
+            style: styles.image,
+          })}
         </View>
 
-        {isFavourite ? (
-          <TouchableOpacity
-            style={styles.favIconContainer}
-            onPress={() => onUnFavouritePress(item)}>
-            {getIcons(Icons.FAV_ICON, {
-              resizeMode: 'contain',
-              style: styles.favIcon,
-            })}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.favIconContainer}
-            onPress={() => onFavouritePress(item)}>
-            {getIcons(Icons.FAV_OUTLINE_ICON, {
-              resizeMode: 'contain',
-              style: styles.favIcon,
-            })}
-          </TouchableOpacity>
-        )}
+        <View style={styles.itemMainContainer}>
+          <View key={item.id} style={styles.itemContainer}>
+            <View style={styles.userDetailContainer}>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={styles.name}
+                preset={'h3'}>
+                {`${item.name}`}
+              </Text>
+
+              <View style={styles.locationContainer}>
+                {getIcons(Icons.LOCATION, {
+                  resizeMode: 'cover',
+                  style: styles.locationIcon,
+                })}
+                <Text
+                  preset={'h5'}
+                  numberOfLines={1}
+                  ellipsizeMode={'tail'}
+                  style={styles.location}>
+                  {item.location}
+                </Text>
+              </View>
+
+              <View style={styles.extraContainer}>
+                {item.extras.map(extraItem => {
+                  return (
+                    <View>
+                      <Text
+                        preset={'h5'}
+                        numberOfLines={1}
+                        ellipsizeMode={'tail'}
+                        style={[
+                          styles.extraText,
+                          {
+                            backgroundColor: extraItem.bodyColor,
+                            color: extraItem.textColor,
+                          },
+                        ]}>
+                        {extraItem.tag}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
+            </View>
+
+            {isFavourite ? (
+              <TouchableOpacity
+                style={styles.favIconContainer}
+                onPress={() => onUnFavouritePress(item)}>
+                {getIcons(Icons.FAV_ICON, {
+                  resizeMode: 'contain',
+                  style: styles.favIcon,
+                })}
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.favIconContainer}
+                onPress={() => onFavouritePress(item)}>
+                {getIcons(Icons.FAV_OUTLINE_ICON, {
+                  resizeMode: 'contain',
+                  style: styles.favIcon,
+                })}
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
       </View>
     );
   }

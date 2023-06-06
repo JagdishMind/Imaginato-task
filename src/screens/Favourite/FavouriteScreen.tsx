@@ -18,8 +18,6 @@ const FavouriteScreen = () => {
     );
   };
 
-  const renderItemSeparator = () => <View style={styles.itemSeparator} />;
-
   const renderEmptyComponent = () => (
     <View style={styles.emptyContainer}>
       <Text preset="h2" style={styles.noFavouritesText}>
@@ -31,16 +29,17 @@ const FavouriteScreen = () => {
   return (
     <BaseLayout>
       <Header title={contents('favourites', 'title')} />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={data}
-        ItemSeparatorComponent={renderItemSeparator}
-        contentContainerStyle={styles.contentContainer}
-        style={styles.flatListStyles}
-        keyExtractor={(item, index) => `${item.id}-${index}`}
-        renderItem={renderItem}
-        ListEmptyComponent={renderEmptyComponent}
-      />
+      <View style={styles.bodyContainer}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={data}
+          contentContainerStyle={styles.contentContainer}
+          style={styles.flatListStyles}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          renderItem={renderItem}
+          ListEmptyComponent={renderEmptyComponent}
+        />
+      </View>
     </BaseLayout>
   );
 };
